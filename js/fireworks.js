@@ -1,210 +1,148 @@
-"use strict";
-
-function updateCoords(e) {
-    pointerX = (e.clientX || e.touches[0].clientX) - canvasEl.getBoundingClientRect().left, pointerY = e.clientY || e.touches[
-        0].clientY - canvasEl.getBoundingClientRect().top
-}
-
-function setParticuleDirection(e) {
-    var t = anime.random(0, 360) * Math.PI / 180,
-        a = anime.random(50, 180),
-        n = [-1, 1][anime.random(0, 1)] * a;
+//canvas鼠标点击烟花特效
+ 
+let endpos = (x, y) => {
+    let angle = random(0, 360) * Math.PI / 180,
+      value = random(20, 150),
+      radius = [-1, 1][random(0, 1)] * value;
+   
     return {
-        x: e.x + n * Math.cos(t),
-        y: e.y + n * Math.sin(t)
+      x: x + radius * Math.cos(angle),
+      y: y + radius * Math.sin(angle)
     }
-}
-
-function createParticule(e, t) {
-    var a = {};
-    return a.x = e, a.y = t, a.color = colors[anime.random(0, colors.length - 1)], a.radius = anime.random(16, 32), a.endPos =
-        setParticuleDirection(a), a.draw = function () {
-            ctx.beginPath(), ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0), ctx.fillStyle = a.color, ctx.fill()
-        }, a
-}
-
-function createCircle(e, t) {
-    var a = {};
-    return a.x = e, a.y = t, a.color = "#F00", a.radius = 0.1, a.alpha = 0.5, a.lineWidth = 6, a.draw = function () {
-        ctx.globalAlpha = a.alpha, ctx.beginPath(), ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0), ctx.lineWidth =
-            a.lineWidth, ctx.strokeStyle = a.color, ctx.stroke(), ctx.globalAlpha = 1
-    }, a
-}
-
-function renderParticule(e) {
-    for (var t = 0; t < e.animatables.length; t++) {
-        e.animatables[t].target.draw()
+  }
+   
+  let random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+   
+  class Circle {
+    constructor(x, y) {
+      this.r = random(9, 13)
+      this.opos = {}
+      this.x = this.opos.x = x
+      this.y = this.opos.y = y
+   
+      this.colors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C']
+      this.color = this.colors[random(0, this.colors.length)];
+      this.tpos = endpos(x, y)
     }
-}
-
-function animateParticules(e, t) {
-    for (var a = createCircle(e, t), n = [], i = 0; i < numberOfParticules; i++) {
-        n.push(createParticule(e, t))
+   
+    creatCircle(ctx) {
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI)
+      ctx.closePath()
+      ctx.fillStyle = this.color
+      ctx.fill()
     }
-    anime.timeline().add({
-        targets: n,
-        x: function (e) {
-            return e.endPos.x
-        },
-        y: function (e) {
-            return e.endPos.y
-        },
-        radius: 0.1,
-        duration: anime.random(1200, 1800),
-        easing: "easeOutExpo",
-        update: renderParticule
-    }).add({
-        targets: a,
-        radius: anime.random(80, 160),
-        lineWidth: 0,
-        alpha: {
-            value: 0,
-            easing: "linear",
-            duration: anime.random(600, 800)
-        },
-        duration: anime.random(1200, 1800),
-        easing: "easeOutExpo",
-        update: renderParticule,
-        offset: 0
+   
+    //根据不同距离段设置前行的步伐，分为3个阶段，离出发点近的那一段为速度最快，中间为速度一般，最远为速度最慢
+    //区分目标点小于出发点的情况
+    //ratio为两点之间的距离的行走比例，比例数值越大，行走越慢
+    moveFun(start, end, current) {
+        let s = random(26, 35),
+          m = random(20, 25),
+          f = random(15, 20),
+          ff = start.x + ~~((end.x - start.x) / 3),
+          mm = ff + ~~((end.x - start.x) / 3),
+          ratio = end.x >= start.x ? (Math.max(current, ff) == current ? (Math.max(current, mm) == current ? s : m) : f) : (Math.max(current, ff) == current ? f : (Math.max(current, mm) == current ? m : s)),
+          mp = {
+            x: end.x - start.x,
+            y: end.y - start.y
+          };
+   
+        return {
+          x: Math.abs(mp.x / ratio),
+          y: Math.abs(mp.y / ratio)
+        }
+      }
+      
+      //根据计算出来的移动值去移动
+      //如果目标坐标大于原始坐标则向右移动，最大不能超过目标坐标，反之向左移动最小不能小于目标坐标
+    move() {
+      var movepos = this.moveFun(this.opos, this.tpos, this.x);
+   
+      this.x = (this.opos.x > this.tpos.x) ? Math.max(this.x - movepos.x, this.tpos.x) : Math.min(this.x + movepos.x, this.tpos.x)
+      this.y = this.opos.y > this.tpos.y ? Math.max(this.y - movepos.y, this.tpos.y) : Math.min(this.y + movepos.y, this.tpos.y)
+      this.r = Math.max(Math.abs((this.r - Math.random() / 1.2).toFixed(2)), 0)
+   
+    }
+  }
+   
+  class BigCircle {
+    constructor(x, y) {
+      this.bR = random(16, 32)
+      this.overR = random(60, 100)
+      this.x = x
+      this.y = y
+      this.op = 1
+    }
+   
+    creatBigCircle(ctx) {
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.bR, 0, 2 * Math.PI)
+      ctx.closePath()
+      ctx.strokeStyle = 'rgba(128, 128, 128, ' + this.op + ')'
+      ctx.stroke()
+    }
+   
+    changeR() {
+      this.bR = Math.min(this.bR += random(1, 4), this.overR);
+      this.op = Math.max((this.op - Math.random() / 12).toFixed(2), 0)
+    }
+   
+    //检查是否运行完毕，以大圆为标准清空屏幕
+    complete() {
+      return this.bR >= this.overR && this.op <= 0;
+    }
+  }
+   
+  window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+   
+  window.clearRequestTimeout = window.cancelAnimationFrame || window.mozCancelRequestAnimationFrame || window.webkitCancelRequestAnimationFrame || window.msCancelRequestAnimationFrame;
+   
+   
+  let c = document.getElementById("fireworks"),
+    w = c.width = c.offsetWidth,
+    h = c.height = c.offsetHeight,
+   
+    ctx = c.getContext("2d"),
+    nums = 40,
+    circles = [],
+    bCircle = null,
+    animationId = false;
+   
+  let int = function(x, y) {
+    circles = []
+   
+    if (animationId) clearRequestTimeout(animationId)
+   
+    for (let i = nums; i-- > 0;) {
+      circles.push(new Circle(x, y))
+    }
+   
+    bCircle = new BigCircle(x, y)
+    creat()
+  }
+   
+  let creat = function() {
+    ctx.clearRect(0, 0, w, h);
+   
+    circles.forEach(function(v) {
+      v.move();
+      v.creatCircle(ctx)
     })
-}
-
-function debounce(e, t) {
-    var a;
-    return function () {
-        var n = this,
-            i = arguments;
-        clearTimeout(a), a = setTimeout(function () {
-            e.apply(n, i)
-        }, t)
+   
+    bCircle.changeR()
+    bCircle.creatBigCircle(ctx)
+   
+    animationId = requestAnimationFrame(creat)
+   
+    if (bCircle.complete()) {
+      //以大圆为标准，清空屏幕停止动画
+      ctx.clearRect(0, 0, w, h);
+      clearRequestTimeout(animationId)
     }
-}
-var canvasEl = document.querySelector(".fireworks");
-if (canvasEl) {
-    var ctx = canvasEl.getContext("2d"),
-        numberOfParticules = 30,
-        pointerX = 0,
-        pointerY = 0,
-        tap = "mousedown",
-        colors = ["#FF1461", "#18FF92", "#5A87FF", "#FBF38C"],
-        setCanvasSize = debounce(function () {
-            canvasEl.width = 2 * window.innerWidth, canvasEl.height = 2 * window.innerHeight, canvasEl.style.width =
-                window.innerWidth + "px", canvasEl.style.height = window.innerHeight + "px", canvasEl.getContext(
-                    "2d").scale(2, 2)
-        }, 500),
-        render = anime({
-            duration: 1 / 0,
-            update: function () {
-                ctx.clearRect(0, 0, canvasEl.width, canvasEl.height)
-            }
-        });
-    document.addEventListener(tap, function (e) {
-        "sidebar" !== e.target.id && "toggle-sidebar" !== e.target.id && "A" !== e.target.nodeName && "IMG" !==
-            e.target.nodeName && (render.play(), updateCoords(e), animateParticules(pointerX, pointerY))
-    }, !1), setCanvasSize(), window.addEventListener("resize", setCanvasSize, !1)
-}
-"use strict";
-
-function updateCoords(e) {
-    pointerX = (e.clientX || e.touches[0].clientX) - canvasEl.getBoundingClientRect().left, pointerY = e.clientY || e.touches[
-        0].clientY - canvasEl.getBoundingClientRect().top
-}
-
-function setParticuleDirection(e) {
-    var t = anime.random(0, 360) * Math.PI / 180,
-        a = anime.random(50, 180),
-        n = [-1, 1][anime.random(0, 1)] * a;
-    return {
-        x: e.x + n * Math.cos(t),
-        y: e.y + n * Math.sin(t)
-    }
-}
-
-function createParticule(e, t) {
-    var a = {};
-    return a.x = e, a.y = t, a.color = colors[anime.random(0, colors.length - 1)], a.radius = anime.random(16, 32), a.endPos =
-        setParticuleDirection(a), a.draw = function () {
-            ctx.beginPath(), ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0), ctx.fillStyle = a.color, ctx.fill()
-        }, a
-}
-
-function createCircle(e, t) {
-    var a = {};
-    return a.x = e, a.y = t, a.color = "#F00", a.radius = 0.1, a.alpha = 0.5, a.lineWidth = 6, a.draw = function () {
-        ctx.globalAlpha = a.alpha, ctx.beginPath(), ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0), ctx.lineWidth =
-            a.lineWidth, ctx.strokeStyle = a.color, ctx.stroke(), ctx.globalAlpha = 1
-    }, a
-}
-
-function renderParticule(e) {
-    for (var t = 0; t < e.animatables.length; t++) {
-        e.animatables[t].target.draw()
-    }
-}
-
-function animateParticules(e, t) {
-    for (var a = createCircle(e, t), n = [], i = 0; i < numberOfParticules; i++) {
-        n.push(createParticule(e, t))
-    }
-    anime.timeline().add({
-        targets: n,
-        x: function (e) {
-            return e.endPos.x
-        },
-        y: function (e) {
-            return e.endPos.y
-        },
-        radius: 0.1,
-        duration: anime.random(1200, 1800),
-        easing: "easeOutExpo",
-        update: renderParticule
-    }).add({
-        targets: a,
-        radius: anime.random(80, 160),
-        lineWidth: 0,
-        alpha: {
-            value: 0,
-            easing: "linear",
-            duration: anime.random(600, 800)
-        },
-        duration: anime.random(1200, 1800),
-        easing: "easeOutExpo",
-        update: renderParticule,
-        offset: 0
-    })
-}
-
-function debounce(e, t) {
-    var a;
-    return function () {
-        var n = this,
-            i = arguments;
-        clearTimeout(a), a = setTimeout(function () {
-            e.apply(n, i)
-        }, t)
-    }
-}
-var canvasEl = document.querySelector(".fireworks");
-if (canvasEl) {
-    var ctx = canvasEl.getContext("2d"),
-        numberOfParticules = 30,
-        pointerX = 0,
-        pointerY = 0,
-        tap = "mousedown",
-        colors = ["#FF1461", "#18FF92", "#5A87FF", "#FBF38C"],
-        setCanvasSize = debounce(function () {
-            canvasEl.width = 2 * window.innerWidth, canvasEl.height = 2 * window.innerHeight, canvasEl.style.width =
-                window.innerWidth + "px", canvasEl.style.height = window.innerHeight + "px", canvasEl.getContext(
-                    "2d").scale(2, 2)
-        }, 500),
-        render = anime({
-            duration: 1 / 0,
-            update: function () {
-                ctx.clearRect(0, 0, canvasEl.width, canvasEl.height)
-            }
-        });
-    document.addEventListener(tap, function (e) {
-        "sidebar" !== e.target.id && "toggle-sidebar" !== e.target.id && "A" !== e.target.nodeName && "IMG" !==
-            e.target.nodeName && (render.play(), updateCoords(e), animateParticules(pointerX, pointerY))
-    }, !1), setCanvasSize(), window.addEventListener("resize", setCanvasSize, !1)
-};
+  }
+   
+  c.onclick = function(e) {
+    e = e || window.event;
+    int(e.clientX, e.clientY)
+  }
