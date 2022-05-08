@@ -12,12 +12,12 @@
     
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <meta name="description" content="源码： &lt;?php highlight_file(__FILE__); if ($_POST[&#39;cmd&#39;]) &amp;#123;     $cmd &#x3D; $_POST[&#39;cmd&#39;];     if (&#39;;&#39; &#x3D;&#x3D;&#x3D; preg_replace(&#39;&#x2F;[a-z_]+\((?R)?\)&#x2F;&#39;, &#39;&#39;, $cmd)) &amp;#123;">
+    <meta name="description" content="源码：&lt;?php highlight_file(__FILE__); if ($_POST[&#39;cmd&#39;]) &amp;#123;     $cmd &#x3D; $_POST[&#39;cmd&#39;];     if (&#39;;&#39; &#x3D;&#x3D;&#x3D; preg_replace(&#39;&#x2F;[a-z_]+\((?R)?\)&#x2F;&#39;, &#39;&#39;, $cmd)) &amp;#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ichunqiu-Mercy-code">
 <meta property="og:url" content="https://scr1pt-k1ddi3.github.io/2022/05/08/ichunqiu-Mercy-code/index.html">
 <meta property="og:site_name" content="scr1pt_k1ddi3&#39; blog">
-<meta property="og:description" content="源码： &lt;?php highlight_file(__FILE__); if ($_POST[&#39;cmd&#39;]) &amp;#123;     $cmd &#x3D; $_POST[&#39;cmd&#39;];     if (&#39;;&#39; &#x3D;&#x3D;&#x3D; preg_replace(&#39;&#x2F;[a-z_]+\((?R)?\)&#x2F;&#39;, &#39;&#39;, $cmd)) &amp;#123;">
+<meta property="og:description" content="源码：&lt;?php highlight_file(__FILE__); if ($_POST[&#39;cmd&#39;]) &amp;#123;     $cmd &#x3D; $_POST[&#39;cmd&#39;];     if (&#39;;&#39; &#x3D;&#x3D;&#x3D; preg_replace(&#39;&#x2F;[a-z_]+\((?R)?\)&#x2F;&#39;, &#39;&#39;, $cmd)) &amp;#123;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://scr1pt-k1ddi3.github.io/2022/05/08/ichunqiu-Mercy-code/1.png">
 <meta property="og:image" content="https://scr1pt-k1ddi3.github.io/2022/05/08/ichunqiu-Mercy-code/2.png">
@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://scr1pt-k1ddi3.github.io/2022/05/08/ichunqiu-Mercy-code/4.png">
 <meta property="og:image" content="https://scr1pt-k1ddi3.github.io/2022/05/08/ichunqiu-Mercy-code/5.png">
 <meta property="article:published_time" content="2022-05-08T09:52:18.000Z">
-<meta property="article:modified_time" content="2022-05-08T10:48:09.173Z">
+<meta property="article:modified_time" content="2022-05-08T10:51:08.502Z">
 <meta property="article:author" content="scr1pt_k1ddi3">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="web">
@@ -37,9 +37,9 @@
         href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"
     />
     
-    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1652006900185">
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1652006900185">
-    <link rel="stylesheet" href="/css/style.css?v=1652006900185">
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1652007076293">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1652007076293">
+    <link rel="stylesheet" href="/css/style.css?v=1652007076293">
      
     
 <meta name="generator" content="Hexo 6.1.0"></head>
@@ -278,8 +278,7 @@
     <a><i class="nexmoefont icon-calendar-fill"></i>2022年05月08日</a>
 </div>
 
-      <p>源码：</p>
-<pre><code class="php">&lt;?php
+      <h2 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h2><pre><code class="php">&lt;?php
 highlight_file(__FILE__);
 if ($_POST[&#39;cmd&#39;]) &#123;
     $cmd = $_POST[&#39;cmd&#39;];
@@ -294,7 +293,7 @@ if ($_POST[&#39;cmd&#39;]) &#123;
     &#125;
 &#125;
 </code></pre>
-<p>这个题就是[GXYCTF2019]禁止套娃的改编版本，<code>&#39;;&#39; === preg_replace(&#39;/[a-z_]+\((?R)?\)/&#39;, &#39;&#39;, $cmd</code>的意思就是只能是无参数函数，恶心一点的是这里加了亿点点过滤，啥玩意都过滤了，环境关了，就从本地实验吧。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>这个题就是[GXYCTF2019]禁止套娃的改编版本，<code>&#39;;&#39; === preg_replace(&#39;/[a-z_]+\((?R)?\)/&#39;, &#39;&#39;, $cmd</code>的意思就是只能是无参数函数，恶心一点的是这里加了亿点点过滤，啥玩意都过滤了，环境关了，就从本地实验吧。</p>
 <p>从网上找到几篇比较好的无参rce：</p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/261800.html">php rce之无参数读文件 - FreeBuf网络安全行业门户</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_28759987/article/details/116284686?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-3-116284686-blog-115856197.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-3-116284686-blog-115856197.pc_relevant_paycolumn_v3&utm_relevant_index=6">(55条消息) php无参数函数实现rce,无参数读文件和RCE总结_春雪芳菲的博客-CSDN博客</a></p>
@@ -315,7 +314,7 @@ if ($_POST[&#39;cmd&#39;]) &#123;
 <p>关键问题是ord()函数被过滤了，这就是一个比较严重的问题，不过我们只要找到一个函数返回一个字符串的第一个字符就行。</p>
 <p>我找到了这个函数，str_split() 函数，解释：</p>
 <p>str_split() 函数把字符串分割到数组中。</p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p> str_split(<em>string,length</em>) </p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p> str_split(<em>string,length</em>) </p>
 <table>
 <thead>
 <tr>
@@ -406,7 +405,7 @@ if ($_POST[&#39;cmd&#39;]) &#123;
                               <button class="mdui-fab catalog" style="overflow:unset;">
                                   <i class="nexmoefont icon-i-catalog"></i>
                                   <div class="nexmoe-toc">
-                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">语法</span></a></li></ol>
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">源码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">语法</span></a></li></ol></li></ol>
                                   </div>
                               </button>
                           
@@ -438,10 +437,10 @@ if ($_POST[&#39;cmd&#39;]) &#123;
 
  
 
-<script async src="/js/app.js?v=1652006900185"></script>
+<script async src="/js/app.js?v=1652007076295"></script>
 
 
-	<script async src="/js/search.js?v=1652006900185"></script>
+	<script async src="/js/search.js?v=1652007076295"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
