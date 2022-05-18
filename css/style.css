@@ -137,6 +137,7 @@ article code {
   font-size: 85%;
   padding: 0.2em 0.4em;
   font-family: Consolas;
+  word-wrap: break-word;
 }
 article code::-webkit-scrollbar {
   width: 10px;
